@@ -1,0 +1,9 @@
+.idea
+.gradle
+out
+build
+node_modules
+.yarn
+.yarnrc.yml
+.pnp.cjs
+.editorconfig
