@@ -37,7 +37,7 @@ export enum TApiErrorCode {
 
 function createTApiSignatureKey(
     endPointName: string,
-    unixSeconds: string,
+    unixSeconds: number,
     accessSecret: string
 ): Uint8Array {
     // SHA256(**EndPointName**+ ';' + UnixSeconds + ';' + **AccessSecret**)
@@ -63,7 +63,7 @@ BinaryContentToSign :=
 export function createTApiSignature(
     endPointName: string,
     body: string,
-    unixSeconds: string,
+    unixSeconds: number,
     accessKey: string,
     accessSecret: string,
 ): string {
@@ -76,7 +76,7 @@ export function createTApiSignature(
     hmac.update(';')
     hmac.update(sha256(body))
     hmac.update(';')
-    hmac.update(unixSeconds)
+    hmac.update(unixSeconds.toString())
     hmac.update(';')
     hmac.update(accessKey)
     hmac.update(';')
@@ -94,6 +94,7 @@ export function createTidyApiAuthorizationHeader(
     accessKey: string,
     accessSecret: string,
 ): string {
+    unixSeconds = Math.floor(unixSeconds)
     return SignAlgorithm
         + ' ' + unixSeconds
         + ' ' + accessKey
@@ -153,7 +154,7 @@ function parseTApiRequestWithSecret(
     if (createTApiSignature(
         endPointName,
         body,
-        unixSeconds.toString(),
+        unixSeconds,
         accessKey,
         accessSecret,
     ) != requestSignature) {
