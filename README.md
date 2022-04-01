@@ -24,19 +24,11 @@ A tidy-api call is represented by sending a Request post body to a Server. The R
 following object:
 
 ```typescript
-{
-    "tidyapi"
-:
-    1,
-        "method"
-:
-    string,
-        "params"
-:
-    any,
-        "id"
-:
-    string
+type TidyHttpRequestBody = {
+    "tidyapi": 1,
+    "method": string,
+    "params": any,
+    "id": string
 }
 ```
 
@@ -127,10 +119,10 @@ When a tidy-api call encounters an error, the Response Object MUST contain the e
 Object with the following members:
 
 ```typescript
-{
-    "code" ? : number,
-        "message" ? : string,
-        "data" ? : any
+type TidyApiErrorObject = {
+    "code"?: number,
+    "message"?: string,
+    "data"?: any
 }
 ```
 
